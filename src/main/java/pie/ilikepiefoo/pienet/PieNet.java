@@ -60,11 +60,16 @@ public class PieNet {
     // Creates a new food item with the id "pienet:example_id", nutrition 1 and saturation 2
     public static final DeferredItem<Item> EXAMPLE_ITEM = ITEMS.registerSimpleItem(
         "example_item",
-        new Item.Properties().food(new FoodProperties.Builder()
-                                       .alwaysEdible()
-                                       .nutrition(1)
-                                       .saturationModifier(2f)
-                                       .build())
+        new Item
+            .Properties()
+            .food(
+                new FoodProperties
+                    .Builder()
+                    .alwaysEdible()
+                    .nutrition(1)
+                    .saturationModifier(2f)
+                    .build()
+            )
     );
     // Create a Deferred Register to hold CreativeModeTabs which will all be registered under the
     // "pienet" namespace
