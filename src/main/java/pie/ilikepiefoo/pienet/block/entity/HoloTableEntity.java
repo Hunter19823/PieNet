@@ -188,9 +188,11 @@ public class HoloTableEntity extends BlockEntity {
         int y,
         int z
     ) {
-        scanningArea = new Vec3i(x,
-                                 y,
-                                 z);
+        scanningArea = new Vec3i(
+            x,
+            y,
+            z
+        );
         CACHE_GROUP.update();
     }
 
@@ -199,9 +201,11 @@ public class HoloTableEntity extends BlockEntity {
         float y,
         float z
     ) {
-        renderArea = new Vector3f(x,
-                                  y,
-                                  z);
+        renderArea = new Vector3f(
+            x,
+            y,
+            z
+        );
         CACHE_GROUP.update();
     }
 
