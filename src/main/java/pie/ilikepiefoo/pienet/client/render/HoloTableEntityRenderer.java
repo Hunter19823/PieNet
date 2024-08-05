@@ -14,6 +14,7 @@ import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
 import net.neoforged.neoforge.client.model.data.ModelData;
 import org.jetbrains.annotations.NotNull;
+import org.joml.Vector3f;
 import pie.ilikepiefoo.pienet.block.entity.HoloTableEntity;
 
 import java.util.function.Consumer;
@@ -33,6 +34,7 @@ public class HoloTableEntityRenderer implements BlockEntityRenderer<HoloTableEnt
         if (blockEntity.getLevel() == null) {
             return;
         }
+        poseStack.pushPose();
         blockRenderDispatcher.renderSingleBlock(
             Blocks.CRAFTING_TABLE.defaultBlockState(),
             poseStack,
@@ -42,8 +44,9 @@ public class HoloTableEntityRenderer implements BlockEntityRenderer<HoloTableEnt
             ModelData.EMPTY,
             RenderType.solid()
         );
-        float scale = blockEntity.getScaledContainerSize();
-        float centering_offset = -scale;
+        poseStack.popPose();
+        Vector3f scale = blockEntity.getScaledContainerSize();
+        Vector3f hologramOffset = blockEntity.getHologramOffset();
         blockEntity
             .getArea()
             .forEach(renderBlockState(
@@ -52,8 +55,7 @@ public class HoloTableEntityRenderer implements BlockEntityRenderer<HoloTableEnt
                 packedLight,
                 packedOverlay,
                 scale,
-                centering_offset,
-                blockEntity.getMatrixSize()
+                hologramOffset
             ));
     }
 
@@ -62,27 +64,26 @@ public class HoloTableEntityRenderer implements BlockEntityRenderer<HoloTableEnt
         @NotNull MultiBufferSource bufferSource,
         int packedLight,
         int packedOverlay,
-        float scale,
-        float centering_offset,
-        int matrixSize
+        Vector3f scale,
+        Vector3f hologramOffset
     ) {
         return (pair) -> {
             poseStack.pushPose();
             poseStack.translate(
                 pair
                     .getFirst()
-                    .getX() * scale - centering_offset,
+                    .getX() * scale.x + hologramOffset.x,
                 pair
                     .getFirst()
-                    .getY() * scale + (matrixSize * scale) + 1,
+                    .getY() * scale.y + hologramOffset.y,
                 pair
                     .getFirst()
-                    .getZ() * scale - centering_offset
+                    .getZ() * scale.z + hologramOffset.z
             );
             poseStack.scale(
-                scale,
-                scale,
-                scale
+                scale.x,
+                scale.y,
+                scale.z
             );
             blockRenderDispatcher.renderSingleBlock(
                 pair.getSecond(),
@@ -91,7 +92,7 @@ public class HoloTableEntityRenderer implements BlockEntityRenderer<HoloTableEnt
                 packedLight,
                 packedOverlay,
                 ModelData.EMPTY,
-                RenderType.SOLID
+                RenderType.cutoutMipped()
             );
             poseStack.popPose();
         };
