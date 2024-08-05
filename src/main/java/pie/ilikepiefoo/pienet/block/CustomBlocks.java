@@ -18,4 +18,9 @@ public interface CustomBlocks {
             .of()
             .mapColor(MapColor.STONE)
     );
+
+    DeferredBlock<HoloTableBlock> HOLO_TABLE = BLOCKS.register(
+        "holo_table",
+        () -> new HoloTableBlock()
+    );
 }
