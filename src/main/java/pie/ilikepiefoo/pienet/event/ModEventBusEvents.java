@@ -20,7 +20,7 @@ public class ModEventBusEvents {
     @SubscribeEvent
     public static void onCreativeModeTabContentEvent(BuildCreativeModeTabContentsEvent event) {
         if (event.getTabKey() == CreativeModeTabs.BUILDING_BLOCKS) {
-            event.accept(CustomItems.EXAMPLE_BLOCK_ITEM);
+            event.accept(CustomItems.HOLO_TABLE_ITEM);
         }
     }
 

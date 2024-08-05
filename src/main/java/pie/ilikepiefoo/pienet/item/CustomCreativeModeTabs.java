@@ -23,13 +23,16 @@ public interface CustomCreativeModeTabs {
             .builder()
             .title(Component.translatable("itemGroup.pienet"))
             .withTabsBefore(net.minecraft.world.item.CreativeModeTabs.COMBAT)
-            .icon(() -> CustomItems.EXAMPLE_ITEM
-                .get()
-                .getDefaultInstance())
-            .displayItems((parameters, output) -> {
-                output.accept(CustomItems.EXAMPLE_ITEM.get()); // Add the example item to the tab. For your
-                // own tabs, this method is preferred over the event
-            })
+            .icon(
+                () -> CustomItems.HOLO_TABLE_ITEM
+                    .get()
+                    .getDefaultInstance()
+            )
+            .displayItems(
+                (parameters, output) -> {
+                    output.accept(CustomItems.HOLO_TABLE_ITEM.get());
+                }
+            )
             .build()
     );
 }
