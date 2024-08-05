@@ -94,8 +94,8 @@ public class PieNet {
     // FML will recognize some parameter types like IEventBus or ModContainer and pass them in
     // automatically.
     public PieNet(
-        IEventBus modEventBus,
-        ModContainer modContainer) {
+        IEventBus modEventBus, ModContainer modContainer
+    ) {
         // Register the commonSetup method for modloading
         modEventBus.addListener(this::commonSetup);
 
@@ -134,7 +134,8 @@ public class PieNet {
             );
         }
 
-        LOGGER.info(Config.magicNumberIntroduction + Config.magicNumber);
+        LOGGER.info(Config.magicNumberIntroduction
+                    + Config.magicNumber);
 
         Config.items.forEach((item) -> LOGGER.info(
             "ITEM >> {}",
@@ -144,7 +145,8 @@ public class PieNet {
 
     // Add the example block item to the building blocks tab
     private void addCreative(BuildCreativeModeTabContentsEvent event) {
-        if (event.getTabKey() == CreativeModeTabs.BUILDING_BLOCKS) {
+        if (event.getTabKey()
+            == CreativeModeTabs.BUILDING_BLOCKS) {
             event.accept(EXAMPLE_BLOCK_ITEM);
         }
     }
