@@ -14,8 +14,16 @@ import pie.ilikepiefoo.pienet.util.CacheGroup;
 import java.util.List;
 
 public class HoloTableEntity extends BlockEntity {
-    private static Vec3i scanningArea = new Vec3i(3, 3, 3);
-    private static Vector3f renderArea = new Vector3f(3, 3, 3);
+    private static Vec3i scanningArea = new Vec3i(
+        3,
+        3,
+        3
+    );
+    private static Vector3f renderArea = new Vector3f(
+        3,
+        3,
+        3
+    );
     private final CacheGroup CACHE_GROUP = new CacheGroup();
     private final Cache<Vec3i> matrixArea = CACHE_GROUP.lazy(() -> new Vec3i(
         (Math.abs(this.getBottomLeft().getX() - this.getTopRight().getX())) / 2,
@@ -27,39 +35,46 @@ public class HoloTableEntity extends BlockEntity {
         this.getVisualContainerSize().y() / (this.getMatrixArea().getY() * 2f + 1f),
         this.getVisualContainerSize().z() / (this.getMatrixArea().getZ() * 2f + 1f)
     ));
-    private final Cache<Vector3f> centerOffset = CACHE_GROUP.lazy(() -> new Vector3f(getScaledContainerSize().x * (
-        (this.getMatrixArea().getX() * 2f - 2) / (this.getVisualContainerSize().x * 2f)
-    ), (
-        (this.getMatrixArea().getY() * getScaledContainerSize().y) + 2
-    ), getScaledContainerSize().z * (
-        (this.getMatrixArea().getZ() * 2f - 2) / (this.getVisualContainerSize().z * 2f)
-    )));
+    private final Cache<Vector3f> centerOffset = CACHE_GROUP.lazy(() -> new Vector3f(
+        getScaledContainerSize().x * ((this.getMatrixArea().getX() * 2f - 2) / (this.getVisualContainerSize().x * 2f)),
+        ((this.getMatrixArea().getY() * getScaledContainerSize().y) + 2),
+        getScaledContainerSize().z * ((this.getMatrixArea().getZ() * 2f - 2) / (this.getVisualContainerSize().z * 2f))
+    ));
     private final Cache<List<Pair<BlockPos, BlockState>>> blocks = CACHE_GROUP.lazy(() -> {
         if (this.getLevel() == null) {
             return List.of();
         }
 
-        return BlockPos.betweenClosedStream(this.getBottomLeft(), this.getTopRight())
-            .filter((pos -> !this.getLevel().getBlockState(pos).isAir()))
-            .map((pos) -> Pair.of(pos.subtract(this.getBlockPos()), this.getLevel().getBlockState(pos)))
-            .filter((pair) -> {
-                for (Direction direction : Direction.values()) {
-                    var relative = pair.getFirst().offset(this.getBlockPos()).relative(direction);
-                    var state = this.getLevel().getBlockState(relative);
-                    if (state.isEmpty() || state.isAir()) {
-                        return true;
-                    }
-                    if (!state.isViewBlocking(this.getLevel(), relative)) {
-                        return true;
-                    }
+        return BlockPos.betweenClosedStream(
+            this.getBottomLeft(),
+            this.getTopRight()
+        ).filter((pos -> !this.getLevel().getBlockState(pos).isAir())).map((pos) -> Pair.of(
+            pos.subtract(this.getBlockPos()),
+            this.getLevel().getBlockState(pos)
+        )).filter((pair) -> {
+            for (Direction direction : Direction.values()) {
+                var relative = pair.getFirst().offset(this.getBlockPos()).relative(direction);
+                var state = this.getLevel().getBlockState(relative);
+                if (state.isEmpty() || state.isAir()) {
+                    return true;
                 }
-                return false;
-            })
-            .toList();
+                if (!state.isViewBlocking(
+                    this.getLevel(),
+                    relative
+                )) {
+                    return true;
+                }
+            }
+            return false;
+        }).toList();
     });
 
     public HoloTableEntity(BlockPos pos, BlockState blockState) {
-        super(CustomBlockEntityTypes.HOLO_TABLE.get(), pos, blockState);
+        super(
+            CustomBlockEntityTypes.HOLO_TABLE.get(),
+            pos,
+            blockState
+        );
     }
 
     /**
@@ -70,17 +85,33 @@ public class HoloTableEntity extends BlockEntity {
     @Override
     public void onLoad() {
         super.onLoad();
-        this.setScanningArea(32, 16, 32);
-        this.setRenderArea(1, 0.5f, 1);
+        this.setScanningArea(
+            32,
+            16,
+            32
+        );
+        this.setRenderArea(
+            1,
+            0.5f,
+            1
+        );
     }
 
     public void setScanningArea(int x, int y, int z) {
-        scanningArea = new Vec3i(x, y, z);
+        scanningArea = new Vec3i(
+            x,
+            y,
+            z
+        );
         CACHE_GROUP.update();
     }
 
     public void setRenderArea(float x, float y, float z) {
-        renderArea = new Vector3f(x, y, z);
+        renderArea = new Vector3f(
+            x,
+            y,
+            z
+        );
         CACHE_GROUP.update();
     }
 
@@ -105,11 +136,19 @@ public class HoloTableEntity extends BlockEntity {
     }
 
     public BlockPos getTopRight() {
-        return this.getBlockPos().offset(scanningArea.getX(), scanningArea.getY(), scanningArea.getZ());
+        return this.getBlockPos().offset(
+            scanningArea.getX(),
+            scanningArea.getY(),
+            scanningArea.getZ()
+        );
     }
 
     public BlockPos getBottomLeft() {
-        return this.getBlockPos().offset(-scanningArea.getX(), -scanningArea.getY(), -scanningArea.getZ());
+        return this.getBlockPos().offset(
+            -scanningArea.getX(),
+            -scanningArea.getY(),
+            -scanningArea.getZ()
+        );
     }
 
 

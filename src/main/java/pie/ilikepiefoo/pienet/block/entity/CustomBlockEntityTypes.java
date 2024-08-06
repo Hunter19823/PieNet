@@ -9,11 +9,16 @@ import pie.ilikepiefoo.pienet.block.CustomBlocks;
 
 public interface CustomBlockEntityTypes {
     DeferredRegister<BlockEntityType<?>> BLOCK_ENTITY_TYPES = DeferredRegister.create(
-        BuiltInRegistries.BLOCK_ENTITY_TYPE, PieNet.MODID);
+        BuiltInRegistries.BLOCK_ENTITY_TYPE,
+        PieNet.MODID
+    );
 
 
     DeferredHolder<BlockEntityType<?>, BlockEntityType<HoloTableEntity>> HOLO_TABLE = BLOCK_ENTITY_TYPES.register(
         "holo_table",
-        () -> BlockEntityType.Builder.of(HoloTableEntity::new, CustomBlocks.HOLO_TABLE.get()).build(null)
+        () -> BlockEntityType.Builder.of(
+            HoloTableEntity::new,
+            CustomBlocks.HOLO_TABLE.get()
+        ).build(null)
     );
 }

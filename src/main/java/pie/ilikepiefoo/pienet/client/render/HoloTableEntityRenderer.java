@@ -35,14 +35,27 @@ public class HoloTableEntityRenderer implements BlockEntityRenderer<HoloTableEnt
             return;
         }
         poseStack.pushPose();
-        blockRenderDispatcher.renderSingleBlock(Blocks.CRAFTING_TABLE.defaultBlockState(), poseStack, bufferSource,
-            packedLight, packedOverlay, ModelData.EMPTY, RenderType.solid()
+        blockRenderDispatcher.renderSingleBlock(
+            Blocks.CRAFTING_TABLE.defaultBlockState(),
+            poseStack,
+            bufferSource,
+            packedLight,
+            packedOverlay,
+            ModelData.EMPTY,
+            RenderType.solid()
         );
         poseStack.popPose();
         Vector3f scale = blockEntity.getScaledContainerSize();
         Vector3f hologramOffset = blockEntity.getHologramOffset();
         blockEntity.getArea()
-            .forEach(renderBlockState(poseStack, bufferSource, packedLight, packedOverlay, scale, hologramOffset));
+            .forEach(renderBlockState(
+                poseStack,
+                bufferSource,
+                packedLight,
+                packedOverlay,
+                scale,
+                hologramOffset
+            ));
     }
 
     private @NotNull Consumer<Pair<BlockPos, BlockState>> renderBlockState(
@@ -55,9 +68,19 @@ public class HoloTableEntityRenderer implements BlockEntityRenderer<HoloTableEnt
                 pair.getFirst().getY() * scale.y + hologramOffset.y,
                 pair.getFirst().getZ() * scale.z + hologramOffset.z
             );
-            poseStack.scale(scale.x, scale.y, scale.z);
-            blockRenderDispatcher.renderSingleBlock(pair.getSecond(), poseStack, bufferSource, packedLight,
-                packedOverlay, ModelData.EMPTY, RenderType.cutoutMipped()
+            poseStack.scale(
+                scale.x,
+                scale.y,
+                scale.z
+            );
+            blockRenderDispatcher.renderSingleBlock(
+                pair.getSecond(),
+                poseStack,
+                bufferSource,
+                packedLight,
+                packedOverlay,
+                ModelData.EMPTY,
+                RenderType.cutoutMipped()
             );
             poseStack.popPose();
         };

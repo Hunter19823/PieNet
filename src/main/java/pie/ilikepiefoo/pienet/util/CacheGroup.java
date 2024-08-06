@@ -12,7 +12,13 @@ public class CacheGroup {
     public <T> Cache<T> lazy(Supplier<T> supplier) {
         Cache<T> cache = new Cache<>(supplier);
         Cache<?>[] newCaches = new Cache<?>[caches.length + 1];
-        System.arraycopy(caches, 0, newCaches, 0, caches.length);
+        System.arraycopy(
+            caches,
+            0,
+            newCaches,
+            0,
+            caches.length
+        );
         newCaches[caches.length] = cache;
         return cache;
     }
