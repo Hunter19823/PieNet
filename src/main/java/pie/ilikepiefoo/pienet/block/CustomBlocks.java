@@ -9,8 +9,5 @@ public interface CustomBlocks {
     // namespace
     DeferredRegister.Blocks BLOCKS = DeferredRegister.createBlocks(PieNet.MODID);
 
-    DeferredBlock<HoloTableBlock> HOLO_TABLE = BLOCKS.register(
-        "holo_table",
-        () -> new HoloTableBlock()
-    );
+    DeferredBlock<HoloTableBlock> HOLO_TABLE = BLOCKS.register("holo_table", () -> new HoloTableBlock());
 }

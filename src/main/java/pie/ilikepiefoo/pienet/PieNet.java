@@ -18,10 +18,7 @@ public class PieNet {
     // The constructor for the mod class is the first code that is run when your mod is loaded.
     // FML will recognize some parameter types like IEventBus or ModContainer and pass them in
     // automatically.
-    public PieNet(
-        IEventBus modEventBus,
-        ModContainer modContainer
-    ) {
+    public PieNet(IEventBus modEventBus, ModContainer modContainer) {
         // Register the Deferred register to the mod event bus so block entities get registered
         CustomBlockEntityTypes.BLOCK_ENTITY_TYPES.register(modEventBus);
         // Register the Deferred Register to the mod event bus so blocks get registered
@@ -32,10 +29,7 @@ public class PieNet {
         CustomCreativeModeTabs.CREATIVE_MODE_TABS.register(modEventBus);
 
         // Register our mod's ModConfigSpec so that FML can create and load the config file for us
-        modContainer.registerConfig(
-            ModConfig.Type.COMMON,
-            Config.SPEC
-        );
+        modContainer.registerConfig(ModConfig.Type.COMMON, Config.SPEC);
     }
 
 }

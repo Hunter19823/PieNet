@@ -17,13 +17,9 @@ import org.jetbrains.annotations.Nullable;
 import pie.ilikepiefoo.pienet.block.entity.HoloTableEntity;
 
 public class HoloTableBlock extends BaseEntityBlock {
-    public static final Properties DEFAULT_PROPERTIES = BlockBehaviour
-        .Properties
-        .of()
+    public static final Properties DEFAULT_PROPERTIES = BlockBehaviour.Properties.of()
         .isViewBlocking((state, world, pos) -> false);
-    public static final MapCodec<? extends BaseEntityBlock> CODEC = BlockBehaviour.simpleCodec(
-        HoloTableBlock::new
-    );
+    public static final MapCodec<? extends BaseEntityBlock> CODEC = BlockBehaviour.simpleCodec(HoloTableBlock::new);
 
     public HoloTableBlock() {
         this(DEFAULT_PROPERTIES);
@@ -41,10 +37,7 @@ public class HoloTableBlock extends BaseEntityBlock {
     @Nullable
     @Override
     public BlockEntity newBlockEntity(@NotNull BlockPos pos, @NotNull BlockState state) {
-        return new HoloTableEntity(
-            pos,
-            state
-        );
+        return new HoloTableEntity(pos, state);
     }
 
     @Override
@@ -54,13 +47,7 @@ public class HoloTableBlock extends BaseEntityBlock {
 
     @Override
     protected @NotNull VoxelShape getVisualShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
-        return Blocks.CRAFTING_TABLE
-            .defaultBlockState()
-            .getVisualShape(
-                level,
-                pos,
-                context
-            );
+        return Blocks.CRAFTING_TABLE.defaultBlockState().getVisualShape(level, pos, context);
     }
 
     @Override

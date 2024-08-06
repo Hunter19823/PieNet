@@ -11,8 +11,5 @@ public interface CustomItems {
     // namespace
     DeferredRegister.Items ITEMS = DeferredRegister.createItems(PieNet.MODID);
 
-    DeferredItem<BlockItem> HOLO_TABLE_ITEM = ITEMS.registerSimpleBlockItem(
-        "holo_table",
-        CustomBlocks.HOLO_TABLE
-    );
+    DeferredItem<BlockItem> HOLO_TABLE_ITEM = ITEMS.registerSimpleBlockItem("holo_table", CustomBlocks.HOLO_TABLE);
 }
