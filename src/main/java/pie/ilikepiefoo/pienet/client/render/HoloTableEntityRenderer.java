@@ -17,8 +17,6 @@ import org.jetbrains.annotations.NotNull;
 import org.joml.Vector3f;
 import pie.ilikepiefoo.pienet.block.entity.HoloTableEntity;
 
-import java.util.function.Consumer;
-
 @OnlyIn(Dist.CLIENT)
 public class HoloTableEntityRenderer implements BlockEntityRenderer<HoloTableEntity> {
     private final BlockEntityRendererProvider.Context context;
@@ -47,21 +45,7 @@ public class HoloTableEntityRenderer implements BlockEntityRenderer<HoloTableEnt
         poseStack.popPose();
         Vector3f scale = blockEntity.getScaledContainerSize();
         Vector3f hologramOffset = blockEntity.getHologramOffset();
-        blockEntity.getArea()
-            .forEach(renderBlockState(
-                poseStack,
-                bufferSource,
-                packedLight,
-                packedOverlay,
-                scale,
-                hologramOffset
-            ));
-    }
-
-    private @NotNull Consumer<Pair<BlockPos, BlockState>> renderBlockState(
-        @NotNull PoseStack poseStack, @NotNull MultiBufferSource bufferSource, int packedLight, int packedOverlay, Vector3f scale, Vector3f hologramOffset
-    ) {
-        return (pair) -> {
+        for (Pair<BlockPos, BlockState> pair : blockEntity.getArea()) {
             poseStack.pushPose();
             poseStack.translate(
                 pair.getFirst().getX() * scale.x + hologramOffset.x,
@@ -83,6 +67,6 @@ public class HoloTableEntityRenderer implements BlockEntityRenderer<HoloTableEnt
                 RenderType.cutoutMipped()
             );
             poseStack.popPose();
-        };
+        }
     }
 }
