@@ -19,6 +19,7 @@ public interface CustomBlockEntityTypes {
         () -> BlockEntityType.Builder.of(
             HoloTableEntity::new,
             CustomBlocks.HOLO_TABLE.get()
-        ).build(null)
+            )
+            .build(null)
     );
 }

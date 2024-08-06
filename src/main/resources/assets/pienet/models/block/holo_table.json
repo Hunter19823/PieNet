@@ -1,3 +1,4 @@
 {
-  "parent": "minecraft:block/crafting_table"
+  "parent": "minecraft:block/crafting_table",
+  "ambientocclusion": false
 }

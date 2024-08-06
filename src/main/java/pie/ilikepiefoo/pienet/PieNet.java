@@ -6,6 +6,7 @@ import net.neoforged.fml.common.Mod;
 import net.neoforged.fml.config.ModConfig;
 import pie.ilikepiefoo.pienet.block.CustomBlocks;
 import pie.ilikepiefoo.pienet.block.entity.CustomBlockEntityTypes;
+import pie.ilikepiefoo.pienet.component.CustomDataComponents;
 import pie.ilikepiefoo.pienet.item.CustomCreativeModeTabs;
 import pie.ilikepiefoo.pienet.item.CustomItems;
 
@@ -19,6 +20,8 @@ public class PieNet {
     // FML will recognize some parameter types like IEventBus or ModContainer and pass them in
     // automatically.
     public PieNet(IEventBus modEventBus, ModContainer modContainer) {
+        // Register the custom data components to the mod event bus, so they get registered
+        CustomDataComponents.DATA_COMPONENTS.register(modEventBus);
         // Register the Deferred register to the mod event bus so block entities get registered
         CustomBlockEntityTypes.BLOCK_ENTITY_TYPES.register(modEventBus);
         // Register the Deferred Register to the mod event bus so blocks get registered

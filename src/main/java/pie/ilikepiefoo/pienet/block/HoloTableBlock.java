@@ -2,6 +2,7 @@ package pie.ilikepiefoo.pienet.block;
 
 import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.EmptyBlockGetter;
 import net.minecraft.world.level.block.BaseEntityBlock;
@@ -15,10 +16,31 @@ import net.neoforged.neoforge.common.world.AuxiliaryLightManager;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import pie.ilikepiefoo.pienet.block.entity.HoloTableEntity;
+import pie.ilikepiefoo.pienet.component.CustomDataComponents;
+import pie.ilikepiefoo.pienet.component.TriVector;
 
 public class HoloTableBlock extends BaseEntityBlock {
     public static final Properties DEFAULT_PROPERTIES = BlockBehaviour.Properties.of()
         .isViewBlocking((state, world, pos) -> false);
+    public static final Item.Properties DEFAULT_ITEM_PROPERTIES = new Item.Properties()
+        .component(
+            CustomDataComponents.HOLO_TABLE_VISUAL_SIZE,
+            new TriVector<>(1.0f,
+                0.5f,
+                1.0f)
+        )
+        .component(
+            CustomDataComponents.HOLO_TABLE_SCANNED_AREA_SIZE,
+            new TriVector<>(32,
+                16,
+                32)
+        )
+        .component(
+            CustomDataComponents.HOLO_TABLE_HOLOGRAM_OFFSET,
+            new TriVector<>(0.0f,
+                0.0f,
+                0.0f)
+        );
     public static final MapCodec<? extends BaseEntityBlock> CODEC = BlockBehaviour.simpleCodec(HoloTableBlock::new);
 
     public HoloTableBlock() {
@@ -92,6 +114,10 @@ public class HoloTableBlock extends BaseEntityBlock {
      */
     @Override
     public int getLightEmission(BlockState state, BlockGetter level, BlockPos pos) {
-        return 10;
+        return super.getLightEmission(
+            state,
+            level,
+            pos
+        );
     }
 }

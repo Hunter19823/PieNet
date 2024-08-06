@@ -1,15 +1,12 @@
 package pie.ilikepiefoo.pienet.client.render;
 
 import com.mojang.blaze3d.vertex.PoseStack;
-import com.mojang.datafixers.util.Pair;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.block.BlockRenderDispatcher;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
-import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
@@ -17,6 +14,7 @@ import net.neoforged.neoforge.client.model.data.ModelData;
 import org.jetbrains.annotations.NotNull;
 import org.joml.Vector3f;
 import pie.ilikepiefoo.pienet.block.entity.HoloTableEntity;
+import pie.ilikepiefoo.pienet.component.BlockRenderPropertiesComponent;
 
 @OnlyIn(Dist.CLIENT)
 public class HoloTableEntityRenderer implements BlockEntityRenderer<HoloTableEntity> {
@@ -57,15 +55,15 @@ public class HoloTableEntityRenderer implements BlockEntityRenderer<HoloTableEnt
             scale.y,
             scale.z
         );
-        for (Pair<BlockPos, BlockState> pair : blockEntity.getArea()) {
+        for (BlockRenderPropertiesComponent renderPropertiesComponent : blockEntity.getArea()) {
             poseStack.pushPose();
             poseStack.translate(
-                pair.getFirst().getX(),
-                pair.getFirst().getY(),
-                pair.getFirst().getZ()
+                renderPropertiesComponent.pos().getX(),
+                renderPropertiesComponent.pos().getY(),
+                renderPropertiesComponent.pos().getZ()
             );
             blockRenderDispatcher.renderSingleBlock(
-                pair.getSecond(),
+                renderPropertiesComponent.blockState(),
                 poseStack,
                 bufferSource,
                 packedLight,
@@ -92,7 +90,7 @@ public class HoloTableEntityRenderer implements BlockEntityRenderer<HoloTableEnt
      * @return an appropriately sized {@link AABB} for the {@link BlockEntityRenderer}
      */
     @Override
-    public AABB getRenderBoundingBox(HoloTableEntity blockEntity) {
+    public @NotNull AABB getRenderBoundingBox(HoloTableEntity blockEntity) {
         return blockEntity.getRenderBoundingBox();
     }
 }
