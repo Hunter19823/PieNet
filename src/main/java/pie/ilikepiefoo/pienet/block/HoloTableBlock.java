@@ -97,6 +97,6 @@ public class HoloTableBlock extends BaseEntityBlock {
      */
     @Override
     public int getLightEmission(BlockState state, BlockGetter level, BlockPos pos) {
-        return 15;
+        return 10;
     }
 }

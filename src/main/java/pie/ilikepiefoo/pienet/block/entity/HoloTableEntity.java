@@ -2,6 +2,7 @@ package pie.ilikepiefoo.pienet.block.entity;
 
 import com.mojang.datafixers.util.Pair;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.core.Vec3i;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
@@ -13,35 +14,42 @@ import pie.ilikepiefoo.pienet.util.CacheGroup;
 import java.util.List;
 
 public class HoloTableEntity extends BlockEntity {
-    private static Vec3i scanningArea = new Vec3i(3,
-                                                  3,
-                                                  3);
-    private static Vector3f renderArea = new Vector3f(3,
-                                                      3,
-                                                      3);
+    private static Vec3i scanningArea = new Vec3i(
+        3,
+        3,
+        3
+    );
+    private static Vector3f renderArea = new Vector3f(
+        3,
+        3,
+        3
+    );
     private final CacheGroup CACHE_GROUP = new CacheGroup();
     private final Cache<Vec3i> matrixArea = CACHE_GROUP.lazy(
         () -> new Vec3i(
             (
-                Math.abs(this
-                             .getBottomLeft()
-                             .getX() - this
-                             .getTopRight()
-                             .getX())
+                Math.abs(
+                    this
+                        .getBottomLeft()
+                        .getX() - this
+                        .getTopRight()
+                        .getX())
             ) / 2,
             (
-                Math.abs(this
-                             .getBottomLeft()
-                             .getY() - this
-                             .getTopRight()
-                             .getY())
+                Math.abs(
+                    this
+                        .getBottomLeft()
+                        .getY() - this
+                        .getTopRight()
+                        .getY())
             ) / 2,
             (
-                Math.abs(this
-                             .getBottomLeft()
-                             .getZ() - this
-                             .getTopRight()
-                             .getZ())
+                Math.abs(
+                    this
+                        .getBottomLeft()
+                        .getZ() - this
+                        .getTopRight()
+                        .getZ())
             ) / 2
         )
     );
@@ -122,9 +130,33 @@ public class HoloTableEntity extends BlockEntity {
                             .getBlockState(pos)
                     )
                 )
+                .filter(
+                    (pair) -> {
+                        for (Direction direction : Direction.values()) {
+                            var relative = pair
+                                .getFirst()
+                                .offset(this.getBlockPos())
+                                .relative(direction);
+                            var state = this
+                                .getLevel()
+                                .getBlockState(relative);
+                            if (state.isEmpty() || state.isAir()) {
+                                return true;
+                            }
+                            if (!state.isViewBlocking(
+                                this.getLevel(),
+                                relative
+                            )) {
+                                return true;
+                            }
+                        }
+                        return false;
+                    }
+                )
                 .toList();
         }
     );
+
     public HoloTableEntity(BlockPos pos, BlockState blockState) {
         super(
             CustomBlockEntityTypes.HOLO_TABLE.get(),
@@ -141,6 +173,16 @@ public class HoloTableEntity extends BlockEntity {
     @Override
     public void onLoad() {
         super.onLoad();
+        this.setScanningArea(
+            32,
+            16,
+            32
+        );
+        this.setRenderArea(
+            1,
+            0.5f,
+            1
+        );
     }
 
     public Vector3f getScaledContainerSize() {
