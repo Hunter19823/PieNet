@@ -20,15 +20,20 @@ public class HoloTableEntity extends BlockEntity {
     private final Cache<Vec3i> matrixArea = CACHE_GROUP.lazy(() -> new Vec3i(
         (Math.abs(this.getBottomLeft().getX() - this.getTopRight().getX())) / 2,
         (Math.abs(this.getBottomLeft().getY() - this.getTopRight().getY())) / 2,
-        (Math.abs(this.getBottomLeft().getZ() - this.getTopRight().getZ())) / 2));
+        (Math.abs(this.getBottomLeft().getZ() - this.getTopRight().getZ())) / 2
+    ));
     private final Cache<Vector3f> scale = CACHE_GROUP.lazy(() -> new Vector3f(
         this.getVisualContainerSize().x() / (this.getMatrixArea().getX() * 2f + 1f),
         this.getVisualContainerSize().y() / (this.getMatrixArea().getY() * 2f + 1f),
-        this.getVisualContainerSize().z() / (this.getMatrixArea().getZ() * 2f + 1f)));
+        this.getVisualContainerSize().z() / (this.getMatrixArea().getZ() * 2f + 1f)
+    ));
     private final Cache<Vector3f> centerOffset = CACHE_GROUP.lazy(() -> new Vector3f(getScaledContainerSize().x * (
-        (this.getMatrixArea().getX() * 2f - 2) / (this.getVisualContainerSize().x * 2f)), (
-        (this.getMatrixArea().getY() * getScaledContainerSize().y) + 2), getScaledContainerSize().z * (
-        (this.getMatrixArea().getZ() * 2f - 2) / (this.getVisualContainerSize().z * 2f))));
+        (this.getMatrixArea().getX() * 2f - 2) / (this.getVisualContainerSize().x * 2f)
+    ), (
+        (this.getMatrixArea().getY() * getScaledContainerSize().y) + 2
+    ), getScaledContainerSize().z * (
+        (this.getMatrixArea().getZ() * 2f - 2) / (this.getVisualContainerSize().z * 2f)
+    )));
     private final Cache<List<Pair<BlockPos, BlockState>>> blocks = CACHE_GROUP.lazy(() -> {
         if (this.getLevel() == null) {
             return List.of();

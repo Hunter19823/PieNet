@@ -36,7 +36,8 @@ public class HoloTableEntityRenderer implements BlockEntityRenderer<HoloTableEnt
         }
         poseStack.pushPose();
         blockRenderDispatcher.renderSingleBlock(Blocks.CRAFTING_TABLE.defaultBlockState(), poseStack, bufferSource,
-            packedLight, packedOverlay, ModelData.EMPTY, RenderType.solid());
+            packedLight, packedOverlay, ModelData.EMPTY, RenderType.solid()
+        );
         poseStack.popPose();
         Vector3f scale = blockEntity.getScaledContainerSize();
         Vector3f hologramOffset = blockEntity.getHologramOffset();
@@ -45,16 +46,19 @@ public class HoloTableEntityRenderer implements BlockEntityRenderer<HoloTableEnt
     }
 
     private @NotNull Consumer<Pair<BlockPos, BlockState>> renderBlockState(
-        @NotNull PoseStack poseStack, @NotNull MultiBufferSource bufferSource, int packedLight, int packedOverlay, Vector3f scale, Vector3f hologramOffset) {
+        @NotNull PoseStack poseStack, @NotNull MultiBufferSource bufferSource, int packedLight, int packedOverlay, Vector3f scale, Vector3f hologramOffset
+    ) {
         return (pair) -> {
             poseStack.pushPose();
             poseStack.translate(
                 pair.getFirst().getX() * scale.x + hologramOffset.x,
                 pair.getFirst().getY() * scale.y + hologramOffset.y,
-                pair.getFirst().getZ() * scale.z + hologramOffset.z);
+                pair.getFirst().getZ() * scale.z + hologramOffset.z
+            );
             poseStack.scale(scale.x, scale.y, scale.z);
             blockRenderDispatcher.renderSingleBlock(pair.getSecond(), poseStack, bufferSource, packedLight,
-                packedOverlay, ModelData.EMPTY, RenderType.cutoutMipped());
+                packedOverlay, ModelData.EMPTY, RenderType.cutoutMipped()
+            );
             poseStack.popPose();
         };
     }

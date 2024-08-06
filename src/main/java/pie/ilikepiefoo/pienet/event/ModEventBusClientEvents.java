@@ -12,9 +12,11 @@ import pie.ilikepiefoo.pienet.client.render.CustomEntityRenderers;
 public class ModEventBusClientEvents {
     @SubscribeEvent
     public static void registerEntityRenderer(
-        EntityRenderersEvent.RegisterRenderers event) {
+        EntityRenderersEvent.RegisterRenderers event
+    ) {
         event.registerBlockEntityRenderer(
             CustomBlockEntityTypes.HOLO_TABLE.get(),
-            CustomEntityRenderers.HOLO_TABLE_ENTITY_RENDERER);
+            CustomEntityRenderers.HOLO_TABLE_ENTITY_RENDERER
+        );
     }
 }

@@ -13,7 +13,8 @@ public interface CustomCreativeModeTabs {
     // "pienet" namespace
     DeferredRegister<CreativeModeTab> CREATIVE_MODE_TABS = DeferredRegister.create(
         Registries.CREATIVE_MODE_TAB,
-        PieNet.MODID);
+        PieNet.MODID
+    );
     // Creates a creative tab with the id "pienet:example_tab" for the example item, that is
     // placed after the combat tab
     DeferredHolder<CreativeModeTab, CreativeModeTab> EXAMPLE_TAB = CREATIVE_MODE_TABS.register(
@@ -25,5 +26,6 @@ public interface CustomCreativeModeTabs {
             .displayItems((parameters, output) -> {
                 output.accept(CustomItems.HOLO_TABLE_ITEM.get());
             })
-            .build());
+            .build()
+    );
 }

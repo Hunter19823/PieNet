@@ -14,5 +14,6 @@ public interface CustomBlockEntityTypes {
 
     DeferredHolder<BlockEntityType<?>, BlockEntityType<HoloTableEntity>> HOLO_TABLE = BLOCK_ENTITY_TYPES.register(
         "holo_table",
-        () -> BlockEntityType.Builder.of(HoloTableEntity::new, CustomBlocks.HOLO_TABLE.get()).build(null));
+        () -> BlockEntityType.Builder.of(HoloTableEntity::new, CustomBlocks.HOLO_TABLE.get()).build(null)
+    );
 }
